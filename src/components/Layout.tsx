@@ -11,9 +11,7 @@ export const Layout = ({ title, children }: LayoutProps) => {
 	}, [title]);
 	return (
 		<>
-			<main className="flex flex-col gap-y-20 md:gap-y-32 overflow-hidden">
-				{children}
-			</main>
+			<main className="">{children}</main>
 		</>
 	);
 };
