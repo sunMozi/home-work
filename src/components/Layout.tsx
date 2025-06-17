@@ -1,17 +1,20 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
+import { Outlet } from 'react-router-dom';
 
 interface LayoutProps {
-	title: string;
-	children: React.ReactNode;
+  title: string;
 }
 
-export const Layout = ({ title, children }: LayoutProps) => {
-	useEffect(() => {
-		document.title = title;
-	}, [title]);
-	return (
-		<>
-			<main className="">{children}</main>
-		</>
-	);
+export const Layout = ({ title }: LayoutProps) => {
+  useEffect(() => {
+    document.title = title;
+  }, [title]);
+
+  return (
+    <>
+      <main>
+        <Outlet />
+      </main>
+    </>
+  );
 };
