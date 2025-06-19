@@ -1,0 +1,19 @@
+{
+  "code": 200,
+  "message": "ok",
+  "data": {
+    "rows": [
+      {
+        "id": 1,
+        "name": "张三",
+        "weight": 10,
+        "count": 3,
+        "description": "重点观察",
+        "updateTime": "2024-06-01 10:00:00",
+        "createTime": "2024-05-01 08:00:00",
+        "rollCallStatus": "正常"
+      }
+    ],
+    "total": 1
+  }
+}

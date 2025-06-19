@@ -1,6 +1,6 @@
 import React, { useEffect, useState, type ReactNode } from 'react';
 import axios from 'axios';
-import { Table } from 'tdesign-react';
+import { Table, MessagePlugin } from 'tdesign-react';
 
 interface Student {
   rollCallStatus: ReactNode;
@@ -26,12 +26,30 @@ export const Admin: React.FC = () => {
   const [students, setStudents] = useState<Student[]>([]);
 
   const fetchStudents = async () => {
-    const res = await axios.get<StudentApiResponse>(
-      'http://localhost:8080/student/list?page=1&size=10'
-    );
-
-    setStudents(res.data.data.rows);
-    console.log('获取学生列表成功:', res.data.data);
+    try {
+      const res = await axios.get<StudentApiResponse>(
+        'http://localhost:8888/student/list?page=1&size=10'
+      );
+      if (res.data.code === 200) {
+        setStudents(res.data.data.rows);
+        console.log('✅ 获取学生列表成功:', res.data.data);
+      } else {
+        throw new Error('服务返回异常');
+      }
+    } catch (error) {
+      console.warn('⚠️ 网络请求失败，尝试加载本地数据', error);
+      // 加载本地数据（public 目录下）
+      try {
+        const localRes = await axios.get<StudentApiResponse>(
+          '/local-students.json'
+        );
+        setStudents(localRes.data.data.rows);
+        MessagePlugin.info('已加载本地学生数据（网络异常降级）');
+      } catch (localError) {
+        console.error('❌ 本地数据加载失败', localError);
+        MessagePlugin.error('学生数据加载失败');
+      }
+    }
   };
 
   useEffect(() => {
